@@ -21,8 +21,17 @@ socket.on('chat', data=>{
 
 message.addEventListener('keypress', ()=>{
     socket.emit('typing', sender.value)
+    setTimeout(clearTyping,1500,'')
 })
 
 socket.on('typing',data=>{
-    feedback.innerHTML = '<p>' + data+  ' typing... </p>'
+    if(data==''){
+        feedback.innerHTML = '<p></p>'
+    }else{
+        feedback.innerHTML = '<p>' + data+  ' typing... </p>'
+    }
 })
+function clearTyping (arg){
+    socket.emit('typing','')
+    feedback.innerHTML = '<p></p>'
+}
